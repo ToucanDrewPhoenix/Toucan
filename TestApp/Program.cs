@@ -14,8 +14,8 @@ using Bite.Runtime.Functions;
 using Bite.Runtime.Functions.ForeignInterface;
 using Bite.Runtime.Memory;
 
-namespace TestApp
-{
+namespace TestApp;
+
 
 class ChangColorIntensity {
     public static Color GetWhiteColorByIntensity( float correctionFactor)
@@ -135,4 +135,4 @@ public class Program
     #endregion
 }
 
-}
+
