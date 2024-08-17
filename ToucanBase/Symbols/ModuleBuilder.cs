@@ -1,0 +1,70 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using Toucan.Ast;
+
+namespace Toucan.Symbols
+{
+
+/// <summary>
+///     Contains helper methods for building module members
+/// </summary>
+public abstract class ModuleBuilder
+{
+    #region Protected
+
+    protected FunctionSymbol CreateFunction(
+        string name,
+        AccesModifierType accesModifier,
+        ClassAndMemberModifiers memberModifiers,
+        bool isExtern,
+        bool isCallable,
+        string type,
+        IReadOnlyCollection < string > parameters )
+    {
+        FunctionSymbol functionSymbol = new FunctionSymbol(
+            name,
+            accesModifier,
+            memberModifiers,
+            isExtern,
+            isCallable
+        )
+        {
+            Type = new ToucanClassType( type ),
+            m_DefBaseNode = new FunctionDeclarationBaseNode
+            {
+                FunctionId = new Identifier( name ),
+                ParametersBase = new ParametersBaseNode
+                {
+                    Identifiers = parameters.Select( p => new Identifier( p ) ).ToList()
+                }
+            }
+        };
+
+        foreach ( string parameter in parameters )
+        {
+            functionSymbol.define( new ParameterSymbol( parameter ) );
+        }
+
+        return functionSymbol;
+    }
+
+    protected FieldSymbol CreatePublicField( string name, string type )
+    {
+        return new FieldSymbol(
+            name,
+            AccesModifierType.Public,
+            ClassAndMemberModifiers.None ) { Type = new ToucanClassType( type ), DefinitionBaseNode = null };
+    }
+
+    protected FieldSymbol CreatePublicField( string name, string type, AstBaseNode declaringType )
+    {
+        return new FieldSymbol(
+            name,
+            AccesModifierType.Public,
+            ClassAndMemberModifiers.None ) { Type = new ToucanClassType( type ), DefinitionBaseNode = declaringType };
+    }
+
+    #endregion
+}
+
+}

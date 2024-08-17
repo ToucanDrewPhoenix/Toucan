@@ -1,0 +1,16 @@
+﻿// Toucan System Module
+
+module System;
+import Interop; 
+
+class Object {
+
+}
+
+// Linked to PrintFunctionVm
+
+extern callable function Print ( object );
+
+// Linked to PrintLineFunctionVm
+
+extern callable function PrintLine ( object );
