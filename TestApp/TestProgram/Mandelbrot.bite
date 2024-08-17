@@ -1,0 +1,75 @@
+module Mandelbrot;
+
+import System; 
+using System;
+
+import Interop; 
+using Interop;
+
+extern callable function GetWhiteColorByIntensity ( intensity );
+
+
+var xmin = -2.0;
+var xmax = 2.0;
+var ymin = -2.0;
+var ymax = 2.0;
+
+var maxiter = 1000;
+
+var xres = 1024;
+var yres = ( xres * ( ymax - ymin ) ) / ( xmax - xmin );
+
+var dx = ( xmax - xmin ) / xres;
+var dy = ( ymax - ymin ) / yres;
+
+var x;
+var y;
+var i;
+var j;
+var k;
+
+var bitmapConstructor = GetConstructor( "Bitmap", "int", "int" );
+
+var img = bitmapConstructor( xres, yres );
+
+var imgFormat = GetStaticMember( "ImageFormat", "Png" );
+var colorBlack = GetStaticMember( "Color", "Black" );
+var colorBrown = GetStaticMember( "Color", "Brown" );
+var setPixel = GetMethod( "Bitmap", "SetPixel", "int", "int", "Color" );
+var console = GetStaticClass("Console");
+
+var mathSqrt = GetStaticMethod("Math", "Sqrt", "double");
+
+for ( j = 0; j < yres; j++ )
+{
+    y = ymax - j * dy;
+
+    for ( i = 0; i < xres; i++ )
+    {
+        var u = 0.0;
+        var v = 0.0;
+        var u2 = u * u;
+        var v2 = v * v;
+        x = xmin + i * dx;
+
+        for ( k = 1; k < maxiter && ( u2 + v2 < 4.0 ); k++ )
+        {
+            v = 2 * u * v + y;
+            u = u2 - v2 + x;
+            u2 = u * u;
+            v2 = v * v;
+        }
+
+        if ( k >= maxiter )
+        {
+            setPixel( img, i, j, colorBlack );
+        }
+        else
+        {
+            var intensity = mathSqrt(k / maxiter);
+            setPixel( img, i, j, GetWhiteColorByIntensity(intensity));
+        }
+    }
+}
+
+img.Save( "file.png", "string", imgFormat, "ImageFormat" );
