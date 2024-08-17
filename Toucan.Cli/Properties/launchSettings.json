@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Toucan.Cli": {
+      "commandName": "Project",
+      "commandLineArgs": "",
+      "1-commandLineArgs": "-i ILMerge\\hello.Toucan",
+      "2-commandLineArgs": " -p .\\TestProgram"
+    }
+  }
+}

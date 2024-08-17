@@ -4,16 +4,16 @@
 
 The main purpose of this project is to 
 
-* show Bite in action inside an acutal application
-* demonstrate the ability to compile a bite program and run on the fly
-* demonstrate how to manipulate objects in your C# program from within your Bite program
+* show Toucan in action inside an acutal application
+* demonstrate the ability to compile a Toucan program and run on the fly
+* demonstrate how to manipulate objects in your C# program from within your Toucan program
 * most importantly, **show how to access objects created on another thread, such as when updating UIElements in WPF, or game objects in Unity**.
 
-# A simple Bite program
+# A simple Toucan program
 
 This simple program sets up an infinite loop and causes the object to move left and right.
 
-```bite 
+```Toucan 
 module Main;
 
 while ( true ) { 
@@ -26,13 +26,13 @@ while ( true ) {
 }
 ```
 
-`gameObject` is an object created in the host program that we pass in to bite using the `BiteVm`'s `RegisterExternalGlobalObjects` method.
+`gameObject` is an object created in the host program that we pass in to Toucan using the `ToucanVm`'s `RegisterExternalGlobalObjects` method.
 
 # The GameObject
 
-We use the WPF `Canvas` as a simple rendering engine.  We add a `UIElement` and we want to animate it using Bite. WPF uses static methods (e.g. `Canvas.SetLeft`) to affect the `UIElement`'s position.
+We use the WPF `Canvas` as a simple rendering engine.  We add a `UIElement` and we want to animate it using Toucan. WPF uses static methods (e.g. `Canvas.SetLeft`) to affect the `UIElement`'s position.
 
-It's possible but awkward to pass in the static Canvas class into Bite to perform the actual movement, so instead we wrap our `UIElement` with the the `GameObject` class, which allows us to "redirect" access to the Canvas static through more accessible instance methods.
+It's possible but awkward to pass in the static Canvas class into Toucan to perform the actual movement, so instead we wrap our `UIElement` with the the `GameObject` class, which allows us to "redirect" access to the Canvas static through more accessible instance methods.
 
 ```cs
 public class GameObject
@@ -63,25 +63,25 @@ public class GameObject
 }
 ```
 
-# Running a Bite program on another thread
+# Running a Toucan program on another thread
 
-When we run a Bite program, we want to execute it on another thread to prevent the UI thread from being blocked and making the application unusable.
+When we run a Toucan program, we want to execute it on another thread to prevent the UI thread from being blocked and making the application unusable.
 
-To do that we call either the `BiteProgram` `RunAsync` method or if using the `BiteVm`, the `InterpretAsync` method (`RunAsync` is just a wrapper around creating a `BiteVm` and executing`InterpretAsync`).
+To do that we call either the `ToucanProgram` `RunAsync` method or if using the `ToucanVm`, the `InterpretAsync` method (`RunAsync` is just a wrapper around creating a `ToucanVm` and executing`InterpretAsync`).
 
 ```cs
-    vm = new BiteVm();
+    vm = new ToucanVm();
     vm.InitVm();
     vm.RegisterSystemModuleCallables();
     vm.SynchronizationContext = SynchronizationContext.Current;
 
-    // Expose CSharp objects to the Bite virtual machine
+    // Expose CSharp objects to the Toucan virtual machine
     vm.RegisterExternalGlobalObjects( new Dictionary < string, object >()
     {
         { "gameObject", gameObject }
     } );
 
-    BiteCompiler compiler = new BiteCompiler();
+    ToucanCompiler compiler = new ToucanCompiler();
 
     var program = compiler.Compile( new[] { Code.Text } );
 
@@ -101,7 +101,7 @@ at this line of code in our `GameObject`.
 Canvas.SetLeft( m_Element, X );
 ```
 
-This is because out Bite program is running on another thread, and attempting to access objects that were created on the main thread.
+This is because out Toucan program is running on another thread, and attempting to access objects that were created on the main thread.
 
 To fix this issue, we need a way to run code on the main thread!
 
@@ -109,7 +109,7 @@ To fix this issue, we need a way to run code on the main thread!
 
 The `sync` keyword is used to execute anything inside a sync block in another context. This is  done by temporarily exiting the internal Run loop to switch to a `SynchronizedContext` and execute the Run loop from there. At the end of the block, execution returns to the current thread. 
 
-```bite 
+```Toucan 
 module Main;
 
 while ( true ) { 
@@ -125,7 +125,7 @@ while ( true ) {
 }
 ```
 
-The thread where the code in the `sync` block will be executed on is determined by passing a `SynchronizationContext` to the `BiteVm`.  The assignment should be done on the UI thread.
+The thread where the code in the `sync` block will be executed on is determined by passing a `SynchronizationContext` to the `ToucanVm`.  The assignment should be done on the UI thread.
 
 ```cs
 vm.SynchronizationContext = SynchronizationContext.Current;

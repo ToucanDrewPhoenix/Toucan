@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using Bite.Compiler;
-using Bite.Modules.Callables;
-using Bite.Runtime;
-using Bite.Runtime.CodeGen;
+using Toucan.Compiler;
+using Toucan.Modules.Callables;
+using Toucan.Runtime;
+using Toucan.Runtime.CodeGen;
 
 namespace WpfThreadTest
 {
@@ -20,7 +20,7 @@ public partial class MainWindow : Window
 {
     private GameObject gameObject;
 
-    private BiteVm vm = null;
+    private ToucanVm vm = null;
 
     #region Public
 
@@ -44,19 +44,19 @@ public partial class MainWindow : Window
             Task.Delay( 500 );
         }
 
-        vm = new BiteVm();
+        vm = new ToucanVm();
         vm.InitVm();
         vm.RegisterSystemModuleCallables();
         vm.SynchronizationContext = SynchronizationContext.Current;
 
-        // Expose CSharp objects to the Bite virtual machine
+        // Expose CSharp objects to the Toucan virtual machine
         vm.RegisterExternalGlobalObjects( new Dictionary < string, object > { { "gameObject", gameObject } } );
 
-        BiteCompiler compiler = new BiteCompiler();
+        ToucanCompiler compiler = new ToucanCompiler();
 
         try
         {
-            BiteProgram program = compiler.Compile( new[] { Code.Text } );
+            ToucanProgram program = compiler.Compile( new[] { Code.Text } );
 
             vm.InterpretAsync( program, CancellationToken.None ).
                ContinueWith(
@@ -69,7 +69,7 @@ public partial class MainWindow : Window
                                {
                                    MessageBox.Show(
                                        t.Exception.InnerException.Message,
-                                       "Bite WPF Thread Test",
+                                       "Toucan WPF Thread Test",
                                        MessageBoxButton.OK,
                                        MessageBoxImage.Exclamation );
                                } );
@@ -80,7 +80,7 @@ public partial class MainWindow : Window
         {
             MessageBox.Show(
                 exception.Message,
-                "Bite WPF Thread Test",
+                "Toucan WPF Thread Test",
                 MessageBoxButton.OK,
                 MessageBoxImage.Exclamation );
         }

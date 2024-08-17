@@ -96,9 +96,9 @@
         <None Include="App.config"/>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Bite\Bite.csproj">
+        <ProjectReference Include="..\Toucan\Toucan.csproj">
             <Project>{2B941484-FB5E-4B3F-AF7D-BF61238D6F16}</Project>
-            <Name>Bite</Name>
+            <Name>Toucan</Name>
         </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
