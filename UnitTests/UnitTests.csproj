@@ -23,7 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Bite\Bite.csproj"/>
+        <ProjectReference Include="..\Toucan\Toucan.csproj"/>
     </ItemGroup>
 
 </Project>

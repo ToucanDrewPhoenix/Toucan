@@ -1,0 +1,8 @@
+{
+  "General": {
+    "InputAssemblies": [
+      "Antlr4.Runtime.Standard.dll",
+      "Toucan.dll"
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetName>Toucanvm</TargetName>
+        <AssemblyName>Toucan.Cli</AssemblyName>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net462</TargetFramework>
+        <StartupObject>Toucan.Cli.Program</StartupObject>
+        <PlatformTarget>AnyCPU</PlatformTarget>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ILMerge" Version="3.0.41"/>
+        <PackageReference Include="ILMerge.MSBuild.Task" Version="1.0.7"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Toucan\Toucan.csproj">
+            <CopyLocal>False</CopyLocal>
+            <CopyLocalSatelliteAssemblies>False</CopyLocalSatelliteAssemblies>
+        </ProjectReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="TestProgram\AModule.Toucan">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="TestProgram\CSharpSystemModule.Toucan">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="TestProgram\MainModule.Toucan">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+</Project>

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Bite.Compiler;
-using Bite.Runtime;
-using Bite.Runtime.CodeGen;
-using Bite.Symbols;
+using Toucan.Compiler;
+using Toucan.Runtime;
+using Toucan.Runtime.CodeGen;
+using Toucan.Symbols;
 using Xunit;
 
 namespace UnitTests
@@ -10,11 +10,11 @@ namespace UnitTests
 
 public class ModuleUnitTests
 {
-    private BiteResult ExecModules( IEnumerable < string > modules )
+    private ToucanResult ExecModules( IEnumerable < string > modules )
     {
-        BiteCompiler compiler = new BiteCompiler();
+        ToucanCompiler compiler = new ToucanCompiler();
 
-        BiteProgram program = compiler.Compile( modules );
+        ToucanProgram program = compiler.Compile( modules );
 
         return program.Run();
     }
@@ -30,11 +30,11 @@ public class ModuleUnitTests
 
         try
         {
-            BiteResult result = ExecModules( new[] { mainModule, subModuleA, subModuleB } );
+            ToucanResult result = ExecModules( new[] { mainModule, subModuleA, subModuleB } );
         }
-        catch ( BiteSymbolTableException e )
+        catch ( ToucanSymbolTableException e )
         {
-            Assert.Equal( "Symbol Table Error: Ambiguous references: Hello", e.BiteSymbolTableExceptionMessage );
+            Assert.Equal( "Symbol Table Error: Ambiguous references: Hello", e.ToucanSymbolTableExceptionMessage );
         }
     }
 
@@ -45,8 +45,8 @@ public class ModuleUnitTests
         string moduleB = "module ModuleB; import ModuleD; ModuleD.d = 11; function foo() { return ModuleD.d; }";
         string moduleC = "module ModuleC; import ModuleD; ModuleD.d = 13; function foo() { return ModuleD.d; }";
         string moduleD = "module ModuleD; var d = 7;";
-        BiteResult result = ExecModules( new[] { moduleA, moduleC, moduleB, moduleD } );
-        Assert.Equal( BiteVmInterpretResult.InterpretOk, result.InterpretResult );
+        ToucanResult result = ExecModules( new[] { moduleA, moduleC, moduleB, moduleD } );
+        Assert.Equal( ToucanVmInterpretResult.InterpretOk, result.InterpretResult );
         Assert.Equal( 11, result.ReturnValue.NumberData );
     }
 
@@ -57,8 +57,8 @@ public class ModuleUnitTests
         string moduleB = "module ModuleB; import ModuleD; ModuleD.d = 11; function foo() { return ModuleD.d; }";
         string moduleC = "module ModuleC; import ModuleD; ModuleD.d = 13; function foo() { return ModuleD.d; }";
         string moduleD = "module ModuleD; var d = 7;";
-        BiteResult result = ExecModules( new[] { moduleC, moduleA, moduleD, moduleB } );
-        Assert.Equal( BiteVmInterpretResult.InterpretOk, result.InterpretResult );
+        ToucanResult result = ExecModules( new[] { moduleC, moduleA, moduleD, moduleB } );
+        Assert.Equal( ToucanVmInterpretResult.InterpretOk, result.InterpretResult );
         Assert.Equal( 11, result.ReturnValue.NumberData );
     }
 
@@ -68,8 +68,8 @@ public class ModuleUnitTests
         string mainModule = "module MainModule; import SubModule; using SubModule; var a = SubModule.a; a;";
         string subModule = "module SubModule; import SubSubModule; using SubSubModule; var a = SubSubModule.a;";
         string subSubModule = "module SubSubModule; var a = 12345;";
-        BiteResult result = ExecModules( new[] { subSubModule, subModule, mainModule } );
-        Assert.Equal( BiteVmInterpretResult.InterpretOk, result.InterpretResult );
+        ToucanResult result = ExecModules( new[] { subSubModule, subModule, mainModule } );
+        Assert.Equal( ToucanVmInterpretResult.InterpretOk, result.InterpretResult );
         Assert.Equal( 12345, result.ReturnValue.NumberData );
     }
 
@@ -79,8 +79,8 @@ public class ModuleUnitTests
         string mainModule = "module MainModule; import SubModule; using SubModule; var a = SubModule.a; a;";
         string subModule = "module SubModule; import SubSubModule; using SubSubModule; var a = SubSubModule.a;";
         string subSubModule = "module SubSubModule; var a = 12345;";
-        BiteResult result = ExecModules( new[] { mainModule, subModule, subSubModule } );
-        Assert.Equal( BiteVmInterpretResult.InterpretOk, result.InterpretResult );
+        ToucanResult result = ExecModules( new[] { mainModule, subModule, subSubModule } );
+        Assert.Equal( ToucanVmInterpretResult.InterpretOk, result.InterpretResult );
         Assert.Equal( 12345, result.ReturnValue.NumberData );
     }
 
@@ -88,16 +88,16 @@ public class ModuleUnitTests
     public void LoadSystemModule()
     {
         string mainModule = "module MainModule; import System;";
-        BiteResult result = ExecModules( new[] { mainModule } );
-        Assert.Equal( BiteVmInterpretResult.InterpretOk, result.InterpretResult );
+        ToucanResult result = ExecModules( new[] { mainModule } );
+        Assert.Equal( ToucanVmInterpretResult.InterpretOk, result.InterpretResult );
     }
 
     [Fact]
     public void ModuleFunctionCallWithoutUsing()
     {
         string mainModule = "module MainModule; import System; System.PrintLine( \"Hello World!\" );";
-        BiteResult result = ExecModules( new[] { mainModule } );
-        Assert.Equal( BiteVmInterpretResult.InterpretOk, result.InterpretResult );
+        ToucanResult result = ExecModules( new[] { mainModule } );
+        Assert.Equal( ToucanVmInterpretResult.InterpretOk, result.InterpretResult );
     }
 
     [Fact]
@@ -107,8 +107,8 @@ public class ModuleUnitTests
             "module MainModule; import SubModule; using SubModule; var greeting = SubModule.a + \" \" + SubModule.b; greeting;";
 
         string subModule = "module SubModule; var a = \"Hello\"; var b = \"World!\";";
-        BiteResult result = ExecModules( new[] { mainModule, subModule } );
-        Assert.Equal( BiteVmInterpretResult.InterpretOk, result.InterpretResult );
+        ToucanResult result = ExecModules( new[] { mainModule, subModule } );
+        Assert.Equal( ToucanVmInterpretResult.InterpretOk, result.InterpretResult );
         Assert.Equal( "Hello World!", result.ReturnValue.StringData );
     }
 
@@ -116,16 +116,16 @@ public class ModuleUnitTests
     public void SystemModuleDeclaration()
     {
         string mainModule = "module MainModule; import System; using System; PrintLine( \"Hello World!\" );";
-        BiteResult result = ExecModules( new[] { mainModule } );
-        Assert.Equal( BiteVmInterpretResult.InterpretOk, result.InterpretResult );
+        ToucanResult result = ExecModules( new[] { mainModule } );
+        Assert.Equal( ToucanVmInterpretResult.InterpretOk, result.InterpretResult );
     }
 
     [Fact]
     public void VariableDeclaration()
     {
         string mainModule = "module MainModule; import System; using System; var a = 1;";
-        BiteResult result = ExecModules( new[] { mainModule } );
-        Assert.Equal( BiteVmInterpretResult.InterpretOk, result.InterpretResult );
+        ToucanResult result = ExecModules( new[] { mainModule } );
+        Assert.Equal( ToucanVmInterpretResult.InterpretOk, result.InterpretResult );
     }
 }
 
