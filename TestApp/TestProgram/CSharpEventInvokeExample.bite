@@ -1,0 +1,21 @@
+module HelloWorld;
+
+import System; 
+using System;
+
+class TestSender
+{
+    
+}
+var valueSetByCallback = "Hallo";
+var sender = new TestSender();
+var counter = 0;
+
+var SampleEventArgs = NetLanguageInterface("SampleEventArgs", true, "", "string");
+
+while(true)
+{
+    SampleEventArgs.Text = "Hallo: ${counter}";
+    EventObject.OnSampleEvent.Invoke(sender, SampleEventArgs);
+    counter++;
+}
