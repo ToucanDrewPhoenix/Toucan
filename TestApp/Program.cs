@@ -6,13 +6,13 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Bite.Compiler;
-using Bite.Modules.Callables;
-using Bite.Runtime;
-using Bite.Runtime.CodeGen;
-using Bite.Runtime.Functions;
-using Bite.Runtime.Functions.ForeignInterface;
-using Bite.Runtime.Memory;
+using Toucan.Compiler;
+using Toucan.Modules.Callables;
+using Toucan.Runtime;
+using Toucan.Runtime.CodeGen;
+using Toucan.Runtime.Functions;
+using Toucan.Runtime.Functions.ForeignInterface;
+using Toucan.Runtime.Memory;
 
 namespace TestApp
 {
@@ -27,10 +27,10 @@ class ChangColorIntensity {
         return Color.FromArgb((int)255, (int)red, (int)green, (int)blue);
     }
 }
-public class WhiteColorByIntensityVm : IBiteVmCallable
+public class WhiteColorByIntensityVm : IToucanVmCallable
 {
 
-    public object Call( DynamicBiteVariable[] arguments )
+    public object Call( DynamicToucanVariable[] arguments )
     {
         if ( arguments.Length == 1 )
         {
@@ -79,14 +79,14 @@ public class Program
     {
         IEnumerable < string > files = Directory.EnumerateFiles(
             ".\\TestProgram",
-            "FibonacciExample.bite",
+            "FibonacciExample.Toucan",
             SearchOption.AllDirectories );
 
-        BiteCompiler compiler = new BiteCompiler();
+        ToucanCompiler compiler = new ToucanCompiler();
 
-        BiteVm biteVm = new BiteVm();
+        ToucanVm ToucanVm = new ToucanVm();
 
-        biteVm.InitVm();
+        ToucanVm.InitVm();
 
         DelegateTest delegateTest = new DelegateTest();
 
@@ -97,26 +97,26 @@ public class Program
         foreach ( string file in files )
         {
             Console.WriteLine( $"File: {file}" );
-            List < string > biteProg = new List < string >();
-            biteProg.Add( File.ReadAllText( file ) );
-            BiteProgram biteProgram = compiler.Compile( biteProg );
+            List < string > ToucanProg = new List < string >();
+            ToucanProg.Add( File.ReadAllText( file ) );
+            ToucanProgram ToucanProgram = compiler.Compile( ToucanProg );
 
-            biteProgram.TypeRegistry.RegisterType < SampleEventArgs >();
-            biteProgram.TypeRegistry.RegisterType < TestClassCSharp >();
-            biteProgram.TypeRegistry.RegisterType < Bitmap >();
-            biteProgram.TypeRegistry.RegisterType < ImageFormat >();
-            biteProgram.TypeRegistry.RegisterType < Color >();
-            // biteProgram.TypeRegistry.RegisterType < FSharpTest.Line >();
-            biteProgram.TypeRegistry.RegisterType( typeof( Console ), "Console" );
-            biteProgram.TypeRegistry.RegisterType (typeof(Math), "Math");
-            biteVm.RegisterSystemModuleCallables( biteProgram.TypeRegistry );
-            biteVm.RegisterCallable( "GetWhiteColorByIntensity", new WhiteColorByIntensityVm() );
-            biteVm.SynchronizationContext = new SynchronizationContext();
-            biteVm.RegisterExternalGlobalObject( "EventObject", cSharpEvent );
+            ToucanProgram.TypeRegistry.RegisterType < SampleEventArgs >();
+            ToucanProgram.TypeRegistry.RegisterType < TestClassCSharp >();
+            ToucanProgram.TypeRegistry.RegisterType < Bitmap >();
+            ToucanProgram.TypeRegistry.RegisterType < ImageFormat >();
+            ToucanProgram.TypeRegistry.RegisterType < Color >();
+            // ToucanProgram.TypeRegistry.RegisterType < FSharpTest.Line >();
+            ToucanProgram.TypeRegistry.RegisterType( typeof( Console ), "Console" );
+            ToucanProgram.TypeRegistry.RegisterType (typeof(Math), "Math");
+            ToucanVm.RegisterSystemModuleCallables( ToucanProgram.TypeRegistry );
+            ToucanVm.RegisterCallable( "GetWhiteColorByIntensity", new WhiteColorByIntensityVm() );
+            ToucanVm.SynchronizationContext = new SynchronizationContext();
+            ToucanVm.RegisterExternalGlobalObject( "EventObject", cSharpEvent );
 
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            biteVm.Interpret( biteProgram );
+            ToucanVm.Interpret( ToucanProgram );
             stopwatch.Stop();
 
             Console.WriteLine( $"--- Elapsed Time Interpreting in Milliseconds: {stopwatch.ElapsedMilliseconds}ms --- " );

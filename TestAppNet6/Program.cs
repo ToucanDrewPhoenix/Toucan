@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using Bite.Compiler;
-using Bite.Runtime;
-using Bite.Runtime.Bytecode;
-using Bite.Runtime.CodeGen;
+using Toucan.Compiler;
+using Toucan.Runtime;
+using Toucan.Runtime.Bytecode;
+using Toucan.Runtime.CodeGen;
 
 namespace TestAppNet6;
 
@@ -25,16 +25,16 @@ public class Program
 
     public static void PerfTests()
     {
-        BiteCompiler compiler = new();
+        ToucanCompiler compiler = new();
 
         IEnumerable < string > files = Directory.EnumerateFiles(
             ".\\TestProgram",
-            "*.bite",
+            "*.Toucan",
             SearchOption.AllDirectories );
 
         Stopwatch stopwatch = new();
         stopwatch.Start();
-        BiteProgram program = compiler.Compile( files.Select( File.ReadAllText ) );
+        ToucanProgram program = compiler.Compile( files.Select( File.ReadAllText ) );
         stopwatch.Stop();
         Console.WriteLine( $"Parsing completed in {stopwatch.ElapsedMilliseconds}ms" );
 
@@ -45,7 +45,7 @@ public class Program
         {
             Stopwatch stopwatch2 = new();
             stopwatch2.Start();
-            BiteResult result = program.Run();
+            ToucanResult result = program.Run();
             stopwatch2.Stop();
 
             Console.WriteLine( result.ReturnValue.ToString() );
@@ -106,9 +106,9 @@ Console.WriteLine(greeting);"
             }
         };
 
-        BiteCompiler compiler = new();
+        ToucanCompiler compiler = new();
 
-        BiteProgram program = compiler.Compile( modules );
+        ToucanProgram program = compiler.Compile( modules );
 
         program.Run();
     }
@@ -117,12 +117,12 @@ Console.WriteLine(greeting);"
     {
         IEnumerable < string > files = Directory.EnumerateFiles(
             ".\\TestProgram",
-            "*.bite",
+            "*.Toucan",
             SearchOption.AllDirectories );
 
-        BiteCompiler compiler = new();
-        BiteProgram program = compiler.Compile( files.Select( File.ReadAllText ) );
-        BiteResult vm = program.Run();
+        ToucanCompiler compiler = new();
+        ToucanProgram program = compiler.Compile( files.Select( File.ReadAllText ) );
+        ToucanResult vm = program.Run();
     }
 
     #endregion

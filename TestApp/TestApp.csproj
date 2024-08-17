@@ -59,14 +59,14 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="TestProgram\CSharpEventInvokeExample.bite">
+    <None Include="TestProgram\CSharpEventInvokeExample.Toucan">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bite\Bite.csproj">
+    <ProjectReference Include="..\Toucan\Toucan.csproj">
       <Project>{2b941484-fb5e-4b3f-af7d-bf61238d6f16}</Project>
-      <Name>Bite</Name>
+      <Name>Toucan</Name>
     </ProjectReference>
     <ProjectReference Include="..\FSharpTest\FSharpTest.fsproj">
       <Project>{69e5a329-0d7e-4c21-a44d-6b2da04d3a98}</Project>
@@ -74,41 +74,41 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestProgram\BinaryOpChaining.bite">
+    <None Include="TestProgram\BinaryOpChaining.Toucan">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="TestProgram\BranchingTest.bite">
+    <None Include="TestProgram\BranchingTest.Toucan">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="TestProgram\ConstructorTest.bite">
+    <None Include="TestProgram\ConstructorTest.Toucan">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="TestProgram\CSharpEventReceiverExample.bite">
+    <None Include="TestProgram\CSharpEventReceiverExample.Toucan">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="TestProgram\DynamicArray.bite">
+    <None Include="TestProgram\DynamicArray.Toucan">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="TestProgram\FibonacciExample.bite">
+    <None Include="TestProgram\FibonacciExample.Toucan">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="TestProgram\InheritanceExample.bite">
+    <None Include="TestProgram\InheritanceExample.Toucan">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="TestProgram\Interop.bite">
+    <None Include="TestProgram\Interop.Toucan">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="TestProgram\PrimeNumber.bite">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="TestProgram\NetLanguageInterfaceExample.bite">
+    <None Include="TestProgram\PrimeNumber.Toucan">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestProgram\Mandelbrot.bite">
+    <None Include="TestProgram\NetLanguageInterfaceExample.Toucan">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestProgram\Mandelbrot.Toucan">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

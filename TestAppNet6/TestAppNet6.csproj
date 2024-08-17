@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Bite\Bite.csproj"/>
+        <ProjectReference Include="..\Toucan\Toucan.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -14,10 +14,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Update="TestProgram\CSharpSystemModule.bite">
+        <None Update="TestProgram\CSharpSystemModule.Toucan">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Update="TestProgram\MainModule.bite">
+        <None Update="TestProgram\MainModule.Toucan">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>

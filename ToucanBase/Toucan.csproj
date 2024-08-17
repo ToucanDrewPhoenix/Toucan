@@ -5,15 +5,15 @@
         <AssemblyName>Toucan</AssemblyName>
         <RootNamespace>Toucan</RootNamespace>
         <PackageId>ToucanVm</PackageId>
-        <Authors>Maximilian Winter</Authors>
+        <Authors>Drew Phoenix and Olawale Abaniwonda</Authors>
         <Company>None</Company>
         <Product>Toucan</Product>
         <PackageVersion>0.1.5</PackageVersion>
         <Title>ToucanVm</Title>
         <Copyright>Copyright (c) Maximilian Winter 2022</Copyright>
-        <PackageProjectUrl>https://github.com/Maximilian-Winter/Toucan-Programming-Language/wiki</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/ToucanDrewPhoenix/Toucan/wiki</PackageProjectUrl>
         <PackageLicenseUrl></PackageLicenseUrl>
-        <RepositoryUrl>https://github.com/Maximilian-Winter/Toucan-Programming-Language</RepositoryUrl>
+        <RepositoryUrl>https://github.com/ToucanDrewPhoenix/Toucan</RepositoryUrl>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
     </PropertyGroup>
 
