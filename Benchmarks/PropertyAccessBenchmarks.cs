@@ -1,0 +1,55 @@
+﻿using System.Collections.Generic;
+using BenchmarkDotNet.Attributes;
+using Toucan.Compiler;
+using Toucan.Runtime.CodeGen;
+
+namespace Benchmarks
+{
+
+public class PropertyAccessBenchmarks
+{
+    private readonly string statements = @"module Main;
+
+            class foo {
+                var x = 5;
+                var y = 2;
+            }
+
+            var a = 1;
+            var b = new foo();
+
+            a += 2;
+            b.x += 2;
+            b[""y""] += 3;
+
+            bar.i += 1;
+            bar.f += 2;
+            bar.d += 3;
+
+            bar.I += 4;
+            bar.F += 5;
+            bar.D += 6;
+        ";
+
+    private readonly ToucanProgram program;
+
+    #region Public
+
+    public PropertyAccessBenchmarks()
+    {
+        Bar bar = new Bar();
+
+        ToucanCompiler compiler = new ToucanCompiler();
+        program = compiler.Compile( new[] { statements } );
+    }
+
+    [Benchmark]
+    public void ArithmeticAssignment()
+    {
+        program.Run( new Dictionary < string, object > { { "bar", new Bar() } } );
+    }
+
+    #endregion
+}
+
+}
