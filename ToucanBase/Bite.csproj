@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>net462;netstandard2.0</TargetFrameworks>
+        <AssemblyName>Toucan</AssemblyName>
+        <RootNamespace>Toucan</RootNamespace>
+        <PackageId>ToucanVm</PackageId>
+        <Authors>Maximilian Winter</Authors>
+        <Company>None</Company>
+        <Product>Toucan</Product>
+        <PackageVersion>0.1.5</PackageVersion>
+        <Title>ToucanVm</Title>
+        <Copyright>Copyright (c) Maximilian Winter 2022</Copyright>
+        <PackageProjectUrl>https://github.com/Maximilian-Winter/Toucan-Programming-Language/wiki</PackageProjectUrl>
+        <PackageLicenseUrl></PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/Maximilian-Winter/Toucan-Programming-Language</RepositoryUrl>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Remove="Modules\InterOp.Toucan" />
+        <None Remove="Modules\System.Toucan" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="Modules\Interop.Toucan" />
+        <EmbeddedResource Include="Modules\System.Toucan" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <PackageReference Include="Antlr4.Runtime.Standard" Version="4.9.2" />
+        <PackageReference Include="System.Runtime" Version="4.3.1" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <Folder Include="AntlrGenerated" />
+        <None Include="LICENSE" Pack="true" Visible="false" PackagePath="" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="LICENSE" Pack="true" Visible="false" PackagePath="" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="WindowsBase" />
+    </ItemGroup>
+
+</Project>
