@@ -15,8 +15,8 @@ using Toucan.Runtime.CodeGen;
 using Toucan.Runtime.Functions;
 using Toucan.Runtime.Memory;
 
-namespace TestMandelbrot
-{
+namespace TestMandelbrot;
+
 
 class ChangColorIntensity {
     public static Color GetWhiteColorByIntensity( float correctionFactor)
@@ -108,4 +108,4 @@ internal class Program
     }
 }
 
-}
+

@@ -5,8 +5,8 @@ using Toucan.Runtime.Functions.ForeignInterface;
 using Toucan.Runtime.Functions.Interop;
 using Toucan.Runtime.Memory;
 
-namespace Benchmarks
-{
+namespace Benchmarks;
+
 
 public class MethodInvocationBenchmarks
 {
@@ -83,4 +83,4 @@ public class MethodInvocationBenchmarks
     #endregion
 }
 
-}
+
